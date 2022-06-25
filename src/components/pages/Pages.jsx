@@ -1,23 +1,19 @@
 import React from 'react';
 // import './App.css';
-import Header from '../Header';
-import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from '../Home';
-import Box from './Box';
+import House from './House'
 
 
 
 const Pages = () => {
 
   return (
-
-    <>
-      <Router >
-      <Header />
-      <Box/>
-      <Home/>
-    </Router>
-    </>
+    
+    <Routes>
+      <Route exact path="*" element={<Home />} />
+      <Route exact path="/house/:id" element={<House />} />
+    </Routes>
   );
 }
 

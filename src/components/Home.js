@@ -1,96 +1,75 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import Box from './pages/Box'
+import { Link } from 'react-router-dom';
+import Box from './pages/Box'
 import './Home.css';
+import Header from './Header'
 
 
 const Home = () => {
   const [houses, setHouses] = useState([]);
-  // const [query,setQuery]=useState("");
-  // const filter = (data) => {
-  //   return data.filter(house=>
-  //     house.ta value tou select &&
-  //     house.ta value tou allou select
-  //     ).includes(query)
-  // }
-
-
+  const [links, setLinks] = useState([]);
 
   useEffect(() => {
-    axios.get('https://assignment.prosperty-mgmt.dev/v1/listings'
-
-    )
+    axios.get('https://assignment.prosperty-mgmt.dev/v1/listings')
       .then((response) => {
         setHouses(response.data.data);
-        console.log('res', response);
-
+        setLinks(response.data.meta.links);
       });
-  }, [])
+    }, [])
 
-
-  // var currentPage = 1;
-  // var maxPage = 34;
-  // const nxtPage = (num) => {
-  //   let pageNum = currentPage + num
-  //   meta.links.active=true
-  //   currentPage = pageNum < 1 ? 1 : pageNum > maxPage ? maxPage : pageNum;
-  //   window.location = `https://assignment.prosperty-mgmt.dev/v1/listings=${currentPage}`;
-  // }
-
-
-  // const houseList = houses?.map((house, index) =>
-  // (<div key={index} >
-  //   {house?.title},
-  //   {house.type.name},
-  //   {house.street},
-  //   {house.street_number},
-  //   {house.postal_code} ,
-  //   {house.description},
-  //   {house.created_at}
-  //   <button>Edit</button></div>))
- 
-// function editing(){
-//   axios.put('https://assignment.prosperty-mgmt.dev/v1/listings',{
-//     property1:"value1",
-//     property2:"value2",
-//     completed:false to true
-//   }).then(res=>console.log(res))
-//   .catch(err=>console.error(err));
-// }
-
+  const turnPage = (url) => {
+    url && axios.get(url).then((response) => {
+      setHouses(response.data.data);
+      setLinks(response.data.meta.links);
+    })
+  }
   
 
   return (
     <>
+    <Header/>
+    <Box setHouses={setHouses} />
       <div className='Home'>
         <table >
-          <tr>
-            <th>title</th>
-            <th>type</th>
-            <th>street</th>
-            <th>street number</th>
-            <th>postal code</th>
-            <th>description</th>
-            <th>created at</th>
-            <th>updated at</th>
-          </tr>
-          {houses?.map((house, index) =>(
+          <thead>
             <tr>
-            <td>{house?.title}</td>
-            <td>{house.type.name}</td>
-            <td>{house.street}</td>
-            <td>{house.street_number}</td>
-            <td>{house.postal_code}</td>
-            <td>{house.description}</td>
-            <td> {house.created_at}</td>
-            <td> {house.updated_at}</td>
+              <th>title</th>
+              <th>type</th>
+              <th>street</th>
+              <th>street number</th>
+              <th>postal code</th>
+              <th>description</th>
+              <th>created at</th>
+              <th>updated at</th>
             </tr>
-            ))}
-        </table>
-        <button >previous page</button>
-        {/* <button onClick={nxtPage()}>next page</button> */}
-      </div>
+          </thead>
+          <tbody>
+            {houses?.map((house, index) =>(
+                
+                <tr key={index}>
+                <td>
+                <Link to={`/house/${house.uuid}`} state={{house}}>
+                  {house?.title}
+                </Link>
+                </td>
+                <td>{house.type.name}</td>
+                <td>{house.street}</td>
+                <td>{house.street_number}</td>
+                <td>{house.postal_code}</td>
+                <td>{house.description}</td>
+                <td> {house.created_at}</td>
+                <td> {house.updated_at}</td>
 
+              </tr>
+               
+              ))}
+            </tbody>
+        </table>
+        { links?.map((link, index) => 
+           (<button className="btn" key={index} onClick={() => turnPage(link.url)} disabled={link.active}>{link.label}</button>)
+           )}
+      </div>
     </>
   )
 }
@@ -98,4 +77,3 @@ const Home = () => {
 
 
 export default Home;
-

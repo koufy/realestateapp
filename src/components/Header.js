@@ -10,29 +10,12 @@ const Header = () => {
 
     <header >
       <div className='container flex'  >
-
-        <div className='nav'>
-
-        </div>
         <div className='button flex'>
-          <h1 >
-            Welcome!
-          </h1>
-
+          <h1>Welcome!</h1>
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <Button>Sign In</Button>
             <Button>Sign Up</Button>
-            
           </ButtonGroup>
-
-
-
-
-
-          
-        </div>
-
-        <div className='toggle'>
         </div>
       </div>
     </header>
