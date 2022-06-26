@@ -24,12 +24,11 @@ const House = () => {
   }
 
   
-// here i wanted to make a function that saves the changes but i couldnt reach the api
-//   const onSave = () => {
-//     axios.put(`https://assignment.prosperty-mgmt.dev/v1/listings/${house.uuid}`, updatedHouse)
-//       .then(response => {
-//       })
-//   }
+  const onSave = () => {
+    axios.put(`https://assignment.prosperty-mgmt.dev/v1/listings/${house.uuid}`, updatedHouse)
+      .then(response => {
+      })
+  }
 
 
   return (
@@ -70,7 +69,7 @@ const House = () => {
           <td> {house?.created_at}</td>
           <td> {house?.updated_at}</td>
           <td className="icon" onClick={() => setIsEdit(!isEdit)}>save/edit
-            {/* <FontAwesomeIcon icon={isEdit ? faSave : faEdit} onClick={() => isEdit && onSave()} /> */}
+            <FontAwesomeIcon icon={isEdit ? faSave : faEdit} onClick={() => isEdit && onSave()} />
           </td>
         </tr>
       </tbody>
