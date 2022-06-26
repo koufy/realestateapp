@@ -68,7 +68,7 @@ const House = () => {
           </td>
           <td> {house?.created_at}</td>
           <td> {house?.updated_at}</td>
-          <td className="icon" onClick={() => setIsEdit(!isEdit)}>save/edit
+          <td className="icon" onClick={() => setIsEdit(!isEdit)}>
             <FontAwesomeIcon icon={isEdit ? faSave : faEdit} onClick={() => isEdit && onSave()} />
           </td>
         </tr>
